@@ -12,14 +12,14 @@ class World
         r2 = r1/r0
         
         binr = (n) -> pow(2, floor(log(n)/log(2)))
-        shift = (a, b, c, d, r) ->
+        hone = (a, b, c, d, r) ->
             if a > c
                 if b > d then [c, d]
                 else shift(a, b, c * r, d * r, r)
             else shift(a, b, c * r, d * r, r)
         
         q = binr(max(w,h))
-        p = shift(w, h, q, q * r2, r2)
+        p = hone(w, h, q, q * r2, r2)
         x = p[0]
         y = p[1]
         r = min(r0, r1)
