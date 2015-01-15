@@ -20,19 +20,19 @@
       binr = function(n) {
         return pow(2, floor(log(n) / log(2)));
       };
-      hone = function(a, b, c, d, r) {
+      hone = function(a, b, c, r) {
         if (a > c) {
-          if (b > d) {
-            return [c, d];
+          if (b > c * r) {
+            return [c, c * r];
           } else {
-            return shift(a, b, c * r, d * r, r);
+            return shift(a, b, c * r, r);
           }
         } else {
-          return shift(a, b, c * r, d * r, r);
+          return shift(a, b, c * r, r);
         }
       };
       q = binr(max(w, h));
-      p = hone(w, h, q, q * r2, r2);
+      p = hone(w, h, q, r2);
       x = p[0];
       y = p[1];
       r = min(r0, r1);
