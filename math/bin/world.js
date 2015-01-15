@@ -25,10 +25,10 @@
           if (b > c * r) {
             return [c, c * r];
           } else {
-            return shift(a, b, c * r, r);
+            return hone(a, b, c * r, r);
           }
         } else {
-          return shift(a, b, c * r, r);
+          return hone(a, b, c * r, r);
         }
       };
       q = binr(max(w, h));

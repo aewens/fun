@@ -15,8 +15,8 @@ class World
         hone = (a, b, c, r) ->
             if a > c
                 if b > c*r then [c, c*r]
-                else shift(a, b, c * r, r)
-            else shift(a, b, c * r, r)
+                else hone(a, b, c * r, r)
+            else hone(a, b, c * r, r)
         
         q = binr(max(w,h))
         p = hone(w, h, q, r2)
