@@ -14,10 +14,16 @@ class Vector
         x = @head.x + v.head.x
         y = @head.y + v.head.y
         new Vector(x, y).set(@tail)
+    mult: (n) ->
+        @head.set(@head.x * n, @head.y * n) if typeof n is "number"
+        @
+    magnitude: ->
+        sqrt(sqre(@head.x) + sqre(@head.y))
+    mag: -> @magnitude()
     render: (world) ->
-        head = [@head.x + @tail.x, @head.y + @tail.y]
+        end = [@head.x + @tail.x, @head.y + @tail.y]
         [tx, ty, hx, hy] = @tail.get()
-                    .concat(head).map (n) -> n * world.unit
+                    .concat(end).map (n) -> n * world.unit
         world.line(tx, ty, hx, hy)
         
 window.Vector = Vector

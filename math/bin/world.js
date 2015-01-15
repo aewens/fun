@@ -13,14 +13,28 @@
     }
 
     World.prototype.resize = function(r0, r1) {
-      var binr, h, m0, m1, r, unit, unit0, unit1, w, x, y;
-      w = parseInt(window.getComputedStyle(document.body).width);
-      h = parseInt(window.getComputedStyle(document.body).height);
+      var binr, h, m0, m1, p, q, r, r2, shift, unit, unit0, unit1, w, x, y;
+      w = parseInt(window.innerWidth);
+      h = parseInt(window.innerHeight);
+      r2 = r1 / r0;
       binr = function(n) {
         return pow(2, floor(log(n) / log(2)));
       };
-      x = binr(max(w, h)) * (r1 / r0);
-      y = x * (r1 / r0);
+      shift = function(a, b, c, d, r) {
+        if (a > c) {
+          if (b > d) {
+            return [c, d];
+          } else {
+            return shift(a, b, c * r, d * r, r);
+          }
+        } else {
+          return shift(a, b, c * r, d * r, r);
+        }
+      };
+      q = binr(max(w, h));
+      p = shift(w, h, q, q * r2, r2);
+      x = p[0];
+      y = p[1];
       r = min(r0, r1);
       unit0 = binr(floor(x / r));
       unit1 = binr(floor(x / (r + 1)));
@@ -59,9 +73,9 @@
 
   grid.blocks(world.unit);
 
-  v1 = new Vector(3, 5).set(2, 2);
+  v1 = new Vector(3, 5).set(2, 2).mult(2);
 
-  v2 = new Vector(7, -2).set(v1);
+  v2 = new Vector(5, -3).set(v1);
 
   v3 = v1.add(v2);
 

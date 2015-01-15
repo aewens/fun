@@ -32,10 +32,25 @@
       return new Vector(x, y).set(this.tail);
     };
 
+    Vector.prototype.mult = function(n) {
+      if (typeof n === "number") {
+        this.head.set(this.head.x * n, this.head.y * n);
+      }
+      return this;
+    };
+
+    Vector.prototype.magnitude = function() {
+      return sqrt(sqre(this.head.x) + sqre(this.head.y));
+    };
+
+    Vector.prototype.mag = function() {
+      return this.magnitude();
+    };
+
     Vector.prototype.render = function(world) {
-      var head, hx, hy, tx, ty, _ref;
-      head = [this.head.x + this.tail.x, this.head.y + this.tail.y];
-      _ref = this.tail.get().concat(head).map(function(n) {
+      var end, hx, hy, tx, ty, _ref;
+      end = [this.head.x + this.tail.x, this.head.y + this.tail.y];
+      _ref = this.tail.get().concat(end).map(function(n) {
         return n * world.unit;
       }), tx = _ref[0], ty = _ref[1], hx = _ref[2], hy = _ref[3];
       return world.line(tx, ty, hx, hy);
