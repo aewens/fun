@@ -13,14 +13,14 @@
     }
 
     World.prototype.resize = function(r0, r1) {
-      var binr, h, m0, m1, p, q, r, r2, shift, unit, unit0, unit1, w, x, y;
+      var binr, h, hone, m0, m1, p, q, r, r2, unit, unit0, unit1, w, x, y;
       w = parseInt(window.innerWidth);
       h = parseInt(window.innerHeight);
       r2 = r1 / r0;
       binr = function(n) {
         return pow(2, floor(log(n) / log(2)));
       };
-      shift = function(a, b, c, d, r) {
+      hone = function(a, b, c, d, r) {
         if (a > c) {
           if (b > d) {
             return [c, d];
@@ -32,7 +32,7 @@
         }
       };
       q = binr(max(w, h));
-      p = shift(w, h, q, q * r2, r2);
+      p = hone(w, h, q, q * r2, r2);
       x = p[0];
       y = p[1];
       r = min(r0, r1);
