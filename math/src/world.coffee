@@ -18,14 +18,19 @@ class World
                 else hone(a, b, c * r, r)
             else hone(a, b, c * r, r)
         
-        q = binr(max(w,h))
-        p = hone(w, h, q, r2)
-        x = p[0]
-        y = p[1]
+        k = [
+            (if r0 > r1 then w else h),
+            (if r0 > r1 then h else w)
+        ]
+        q = binr(k[0])
+        p = hone(k[0], k[1], q, r2)
+        x = p[(if r0 > r1 then 0 else 1)]
+        y = p[(if r0 > r1 then 1 else 0)]
         r = min(r0, r1)
+        s = max(x, y)
         
-        unit0 = binr(floor(x/r))
-        unit1 = binr(floor(x/(r+1)))
+        unit0 = binr(floor(s/r))
+        unit1 = binr(floor(s/(r+1)))
         unit  = (unit0 + unit1) / 2
         
         @paper.width  = unit * r0

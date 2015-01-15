@@ -13,7 +13,7 @@
     }
 
     World.prototype.resize = function(r0, r1) {
-      var binr, h, hone, m0, m1, p, q, r, r2, unit, unit0, unit1, w, x, y;
+      var binr, h, hone, k, m0, m1, p, q, r, r2, s, unit, unit0, unit1, w, x, y;
       w = parseInt(window.innerWidth);
       h = parseInt(window.innerHeight);
       r2 = r1 / r0;
@@ -31,13 +31,15 @@
           return hone(a, b, c * r, r);
         }
       };
-      q = binr(max(w, h));
-      p = hone(w, h, q, r2);
-      x = p[0];
-      y = p[1];
+      k = [(r0 > r1 ? w : h), (r0 > r1 ? h : w)];
+      q = binr(k[0]);
+      p = hone(k[0], k[1], q, r2);
+      x = p[(r0 > r1 ? 0 : 1)];
+      y = p[(r0 > r1 ? 1 : 0)];
       r = min(r0, r1);
-      unit0 = binr(floor(x / r));
-      unit1 = binr(floor(x / (r + 1)));
+      s = max(x, y);
+      unit0 = binr(floor(s / r));
+      unit1 = binr(floor(s / (r + 1)));
       unit = (unit0 + unit1) / 2;
       this.paper.width = unit * r0;
       this.paper.height = unit * r1;
