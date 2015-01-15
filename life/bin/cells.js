@@ -23,7 +23,7 @@
     Cells.prototype.generate = function() {
       var a, alive, chance, x, y, _i, _ref, _ref1;
       alive = new Array(this.pop);
-      chance = 0.95;
+      chance = 0.85;
       for (a = _i = 0, _ref = this.pop - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; a = 0 <= _ref ? ++_i : --_i) {
         alive[a] = random() > chance;
         if (alive[a]) {
@@ -56,10 +56,10 @@
       if (this.alive[(x - 1) + (y - 1) * this.x]) {
         count = count + 1;
       }
-      if (this.alive[x + (y - 1) * this.x]) {
+      if (this.alive[(x + 1) + (y - 1) * this.x]) {
         count = count + 1;
       }
-      if (this.alive[(x + 1) + (y - 1) * this.x]) {
+      if (this.alive[x + (y - 1) * this.x]) {
         count = count + 1;
       }
       if (this.alive[(x - 1) + y * this.x]) {
@@ -71,10 +71,10 @@
       if (this.alive[(x - 1) + (y + 1) * this.x]) {
         count = count + 1;
       }
-      if (this.alive[x + (y + 1) * this.x]) {
+      if (this.alive[(x + 1) + (y + 1) * this.x]) {
         count = count + 1;
       }
-      if (this.alive[(x + 1) + (y + 1) * this.x]) {
+      if (this.alive[x + (y + 1) * this.x]) {
         count = count + 1;
       }
       return count;

@@ -4,9 +4,11 @@
 
   Life = (function() {
     function Life() {
+      var mod;
       this.paper = document.querySelector("#paper");
       this.paint = this.paper.getContext("2d");
-      this.ratio = [64, 48];
+      mod = pow(2, 2);
+      this.ratio = [mod * 4, mod * 3];
       this.unit = this.resize(this.ratio[0], this.ratio[1]);
     }
 
@@ -51,7 +53,5 @@
     paint.clearRect(0, 0, paper.width, paper.height);
     return cells.next_gen();
   };
-
-  setInterval(render, 200);
 
 }).call(this);

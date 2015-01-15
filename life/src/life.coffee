@@ -2,7 +2,8 @@ class Life
     constructor: ->
         @paper = document.querySelector("#paper")
         @paint = @paper.getContext("2d")
-        @ratio = [64, 48]
+        mod = pow(2, 2)
+        @ratio = [mod * 4, mod * 3]
         @unit  = @resize(@ratio[0], @ratio[1])
     
     resize: (r0, r1) ->
@@ -42,7 +43,7 @@ render = ->
     paint.clearRect(0, 0, paper.width, paper.height)
     cells.next_gen()
     
-setInterval(render, 200)
+# setInterval(render, 100)
 
 # Speed-mode!
 # cells.animate(render)

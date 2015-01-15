@@ -15,7 +15,7 @@ class Cells
         
     generate: ->
         alive = new Array(@pop)
-        chance = 0.95
+        chance = 0.85
         for a in [0..@pop-1]
             alive[a] = (random() > chance)
             if alive[a]
@@ -33,13 +33,13 @@ class Cells
     neighbors: (x, y) ->
         count = 0
         if @alive[(x-1) + (y-1) * @x] then count = count + 1
-        if @alive[(x)   + (y-1) * @x] then count = count + 1
         if @alive[(x+1) + (y-1) * @x] then count = count + 1
+        if @alive[(x)   + (y-1) * @x] then count = count + 1
         if @alive[(x-1) + (y)   * @x] then count = count + 1
         if @alive[(x+1) + (y)   * @x] then count = count + 1
         if @alive[(x-1) + (y+1) * @x] then count = count + 1
-        if @alive[(x)   + (y+1) * @x] then count = count + 1
         if @alive[(x+1) + (y+1) * @x] then count = count + 1
+        if @alive[(x)   + (y+1) * @x] then count = count + 1
         count
         
     next_gen: ->
