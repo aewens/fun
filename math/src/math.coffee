@@ -11,5 +11,6 @@ window.min    = Math.min
 window.pow    = Math.pow
 window.pi     = Math.PI
 
+window.tau    = Math.PI * 2
 window.sqre = (x) -> Math.pow(x, 2)
 window.div = (x, y) -> Math.floor(x/y)
