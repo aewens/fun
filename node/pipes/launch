@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+# jade -wP views/index.jade & coffee -wc . && fg
+coffee -wc .
