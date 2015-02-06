@@ -24,6 +24,7 @@ define ->
             @
         find: (elem) ->
             element = document.querySelectorAll(elem)[0]
+            return null if element is undefined
             if element.length == 1
                 @element = element[0]
             else

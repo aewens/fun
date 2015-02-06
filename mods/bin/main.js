@@ -8,15 +8,27 @@
     }
   });
 
-  require(["jquery", "underscore", "dom"], function($, _, Dom) {
+  require(["jquery", "underscore", "dom", "pappai"], function($, _, Dom, Pappai) {
     return $(document).ready(function() {
-      var a, b, c;
-      a = Dom["new"]();
-      b = Dom["new"]();
-      c = Dom["new"]();
-      console.log(a);
-      console.log(b.create("div").into(document.body));
-      return console.log(a.find("div").add(c.create("canvas")));
+      var DomCall, PappaiCall;
+      DomCall = function() {
+        var a, b, c;
+        a = Dom["new"]();
+        b = Dom["new"]();
+        c = Dom["new"]();
+        console.log(a);
+        console.log(b.create("div").into(document.body));
+        return console.log(a.find("div").add(c.create("canvas")));
+      };
+      PappaiCall = function() {
+        var p, q;
+        p = Pappai.Node();
+        q = Pappai.Circle(10);
+        console.log(p);
+        return console.log(q.set(200, 100).fg("#fff").bg("#000").sg("#f00").link(p).render());
+      };
+      setTimeout(DomCall, 0);
+      return setTimeout(PappaiCall, 1);
     });
   });
 

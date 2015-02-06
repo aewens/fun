@@ -39,6 +39,9 @@
       find: function(elem) {
         var element;
         element = document.querySelectorAll(elem)[0];
+        if (element === void 0) {
+          return null;
+        }
         if (element.length === 1) {
           this.element = element[0];
         } else {
