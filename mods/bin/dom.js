@@ -3,20 +3,46 @@
   define(function() {
     var $;
     $ = {
-      create: function(el) {
-        this.el = document.createElement(el);
-        return this;
+      "new": function() {
+        return Object.create($);
       },
-      isElem: function(el) {
-        return el instanceof HTMLElement;
+      create: function(element) {
+        this.element = document.createElement(element);
+        if (this.isElement(this.element)) {
+          return this;
+        } else {
+          return null;
+        }
       },
-      into: function(el) {
-        if (!(el && this.el)) {
-          console.log("Error #001: el(" + el + "), @el(" + this.el + "))");
+      isElement: function(element) {
+        return element instanceof HTMLElement;
+      },
+      into: function(element) {
+        if (!this.isElement(element)) {
+          console.log("Error #001: (" + element + ")");
           return;
         }
-        if (this.isElem(el)) {
-          el.appendChild(this.el);
+        element.appendChild(this.element);
+        return this;
+      },
+      add: function(dom) {
+        if (!dom) {
+          return;
+        }
+        if (!this.isElement(dom.element)) {
+          console.log("Error #002: (" + dom.element + ")");
+          return;
+        }
+        this.element.appendChild(dom.element);
+        return this;
+      },
+      find: function(elem) {
+        var element;
+        element = document.querySelectorAll(elem)[0];
+        if (element.length === 1) {
+          this.element = element[0];
+        } else {
+          this.element = element;
         }
         return this;
       }

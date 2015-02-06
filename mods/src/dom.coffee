@@ -1,15 +1,33 @@
 define ->
     $ =
-        create: (el) ->
-            @el = document.createElement(el)
-            @
-        isElem: (el) ->
-            el instanceof HTMLElement
-        into: (el) ->
-            unless el and @el
-                console.log "Error #001: el(#{el}), @el(#{@el}))"
+        new: -> Object.create($)
+        create: (element) ->
+            @element = document.createElement(element)
+            if @isElement(@element)
+                return @
+            else
+                null
+        isElement: (element) ->
+            element instanceof HTMLElement
+        into: (element) ->
+            unless @isElement(element)
+                console.log "Error #001: (#{element})"
                 return
-            el.appendChild(@el) if @isElem(el)
+            element.appendChild(@element)
+            @
+        add: (dom) ->
+            return unless dom
+            unless @isElement(dom.element)
+                console.log "Error #002: (#{dom.element})"
+                return
+            @element.appendChild(dom.element)
+            @
+        find: (elem) ->
+            element = document.querySelectorAll(elem)[0]
+            if element.length == 1
+                @element = element[0]
+            else
+                @element = element
             @
             
     return $

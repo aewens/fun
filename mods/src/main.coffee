@@ -10,5 +10,9 @@ require [
     "dom"
 ], ($, _, Dom) ->
     $(document).ready ->
-        console.log Dom
-        console.log Dom.create("div").into(document.body)
+        a = Dom.new()
+        b = Dom.new()
+        c = Dom.new()
+        console.log a
+        console.log b.create("div").into(document.body)
+        console.log a.find("div").add(c.create("canvas"))

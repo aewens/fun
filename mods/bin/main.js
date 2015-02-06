@@ -10,8 +10,13 @@
 
   require(["jquery", "underscore", "dom"], function($, _, Dom) {
     return $(document).ready(function() {
-      console.log(Dom);
-      return console.log(Dom.create("div").into(document.body));
+      var a, b, c;
+      a = Dom["new"]();
+      b = Dom["new"]();
+      c = Dom["new"]();
+      console.log(a);
+      console.log(b.create("div").into(document.body));
+      return console.log(a.find("div").add(c.create("canvas")));
     });
   });
 
