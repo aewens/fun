@@ -13,5 +13,4 @@ expect = (a) ->
             
 results = ->
     console.log "Passed: #{_tests.length - _fails}/#{_tests.length}"
-    console.log "Failed: #{_fails}/#{_tests.length}"
     if _fails is 0 then console.log "All passed!"

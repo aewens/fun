@@ -23,7 +23,6 @@
 
   results = function() {
     console.log("Passed: " + (_tests.length - _fails) + "/" + _tests.length);
-    console.log("Failed: " + _fails + "/" + _tests.length);
     if (_fails === 0) {
       return console.log("All passed!");
     }
