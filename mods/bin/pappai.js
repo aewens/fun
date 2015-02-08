@@ -4,7 +4,7 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(["dom"], function($) {
-    var CCircle, CNode, Pappai;
+    var CBox, CCircle, CNode, CSquare, Pappai;
     CNode = (function() {
       function CNode() {
         this.PAPER = $.find("canvas").element;
@@ -86,12 +86,57 @@
       return CCircle;
 
     })(CNode);
+    CBox = (function(_super) {
+      __extends(CBox, _super);
+
+      function CBox(Pappai, width, height) {
+        this.give("width", width);
+        this.give("height", height);
+        CBox.__super__.constructor.apply(this, arguments);
+      }
+
+      CBox.prototype.render = function() {
+        this.PAPER.style.backgroundColor = this.bcolor;
+        this.PAINT.fillStyle = this.fcolor;
+        this.PAINT.rect(this.x, this.y, this.width, this.height);
+        this.PAINT.fill();
+        return this;
+      };
+
+      return CBox;
+
+    })(CNode);
+    CSquare = (function(_super) {
+      __extends(CSquare, _super);
+
+      function CSquare(Pappai, side) {
+        this.give("side", side);
+        CSquare.__super__.constructor.apply(this, arguments);
+      }
+
+      CSquare.prototype.render = function() {
+        this.PAPER.style.backgroundColor = this.bcolor;
+        this.PAINT.fillStyle = this.fcolor;
+        this.PAINT.rect(this.x, this.y, this.side, this.side);
+        this.PAINT.fill();
+        return this;
+      };
+
+      return CSquare;
+
+    })(CNode);
     Pappai = {
       Node: function() {
         return new CNode();
       },
       Circle: function(radius) {
         return new CCircle(this, radius);
+      },
+      Box: function(width, height) {
+        return new CBox(this, width, height);
+      },
+      Square: function(side) {
+        return new CSquare(this, side);
       }
     };
     return Pappai;

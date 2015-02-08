@@ -50,10 +50,34 @@ define ["dom"], ($) ->
             @PAINT.arc(@x, @y, @radius, 0, @tau)
             @PAINT.fill()
             @
-        
+            
+    class CBox extends CNode
+        constructor: (Pappai, width, height) ->
+            @give("width", width)
+            @give("height", height)
+            super
+        render: ->
+            @PAPER.style.backgroundColor = @bcolor
+            @PAINT.fillStyle = @fcolor
+            @PAINT.rect(@x, @y, @width, @height)
+            @PAINT.fill()
+            @
+            
+    class CSquare extends CNode
+        constructor: (Pappai, side) ->
+            @give("side", side)
+            super
+        render: ->
+            @PAPER.style.backgroundColor = @bcolor
+            @PAINT.fillStyle = @fcolor
+            @PAINT.rect(@x, @y, @side, @side)
+            @PAINT.fill()
+            @
     
     Pappai =
         Node: -> new CNode()
         Circle: (radius) -> new CCircle(@, radius)
+        Box: (width, height) -> new CBox(@, width, height)
+        Square: (side) -> new CSquare(@, side)
             
     return Pappai
