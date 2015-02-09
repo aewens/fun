@@ -1,10 +1,12 @@
 # Micro Test Framework
 _tests = []
 _fails = 0
+_deter = -> # put your determination function here
 expect = (a) -> 
     a: a
     to: (b) ->
-        if (undef(a) and undef(b)) or equal(a, b)
+        determ = _deter(a, b)
+        if determ
             _tests.push(true)
         else
             _tests.push(false)
