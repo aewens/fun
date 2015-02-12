@@ -8,9 +8,16 @@
     }
   });
 
-  require(["jquery", "underscore", "dom", "pappai"], function($, _, Dom, Pappai) {
+  require(["jquery", "underscore", "bool", "dom", "pappai"], function($, _, Bool, Dom, Pappai) {
     return $(document).ready(function() {
-      var a, b, c, pb, pc, pn, ps;
+      var a, b, bool_test, c, log, pb, pc, pn, ps;
+      log = console.info.bind(console);
+      bool_test = function(a, b, c) {
+        console.log(a, b, c);
+        c.neg().f();
+        return Bool.fn.on(a + b, 3).run(log, c.t().neg());
+      };
+      console.log(Bool(bool_test, 1, 2));
       a = Dom["new"]();
       b = Dom["new"]();
       c = Dom["new"]();

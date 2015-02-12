@@ -42,7 +42,8 @@
         return this;
       }
     };
-    return B.init.prototype = B.fn;
+    B.init.prototype = B.fn;
+    return B;
   });
 
 }).call(this);

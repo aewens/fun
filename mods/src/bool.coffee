@@ -23,3 +23,5 @@ define ->
             @
         
     B.init.prototype = B.fn
+    
+    return B

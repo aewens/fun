@@ -7,10 +7,22 @@ require.config
 require [
     "jquery", 
     "underscore",
+    "bool",
     "dom",
     "pappai"
-], ($, _, Dom, Pappai) ->
+], ($, _, Bool, Dom, Pappai) ->
     $(document).ready ->
+        # Safe console.log
+        log = console.info.bind(console)
+        
+        # Bool
+        bool_test = (a, b, c) ->
+            console.log a, b, c
+            c.neg().f()
+            Bool.fn.on(a + b, 3).run(log, c.t().neg())
+
+        console.log Bool(bool_test, 1, 2)
+        
         # Dom
         a = Dom.new()
         b = Dom.new()
