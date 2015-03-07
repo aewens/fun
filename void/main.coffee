@@ -57,6 +57,7 @@ _.sub  = (m) -> (n) -> n(_.pred)(m)
 _.mul  = (m) -> (n) -> (f) -> m(n(f))
 _.pow  = (b) -> (e) -> e(b)
 _.div1 = (g) -> (q) -> (a) -> (b) -> 
+    # if(a < b) then [q, a] else div1(q+1, a-b, b)
     _.iff(_.lt(a)(b))(_.cons(q)(a))((x) -> g(_.succ(q))(_.sub(a)(b))(b)(x))
 _.div  = (a) -> (b) -> _.Z(_.div1)(_[0])(a)(b)
 _.idiv = (m) -> (n) -> _.car(_.div(m)(n))
@@ -68,9 +69,10 @@ _[1] = _.succ(_[0])
 _[2] = _.succ(_[1])
 _[3] = _.succ(_[2])
 _[4] = _.succ(_[3])
-_[5] = _.add(_[2])(_[3])
+_[5] = _.succ(_[4])
 _[6] = _.succ(_[5])
 
+# Cons shell for testing
 shell = _.cons(_[0])(_.cons(_[1])(_.nil))
 
 check(_.i(_.s(_.k)(_.k)(1)), 1)
