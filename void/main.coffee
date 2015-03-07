@@ -35,6 +35,7 @@ _.f   = (x) -> (y) -> y
 _.and = (p) -> (q) -> p(q)(p)
 _.or  = (p) -> (q) -> p(p)(q)
 _.not = (p) -> p(_.f)(_.t)
+_.xor = (p) -> (q) -> p(_.not(q))(q)
 
 # List Operators
 _.cons = (x) -> (y) -> (f) -> f(x)(y)
@@ -47,7 +48,10 @@ _.null = (p) -> p((x) -> (y) -> _.f)
 _.is0 = (n) -> n((x) -> _.f)(_.t)
 _.leq = (m) -> (n) -> _.is0(_.sub(m)(n))
 _.geq = (m) -> (n) -> _.leq(n)(m)
+_.neq = (m) -> (n) -> _.or(_.not(_.leq(m)(n)))(_.not(_.leq(n)(m)))
+_.eq  = (m) -> (n) -> _.and(_.leq(m)(n))(_.leq(n)(m))
 _.lt  = (m) -> (n) -> _.not(_.leq(n)(m))
+_.gt  = (m) -> (n) -> _.not(_.leq(m)(n))
 
 # Math Operators
 _.succ = (n) -> (f) -> (x) -> f(n(f)(x))
@@ -71,6 +75,9 @@ _[3] = _.succ(_[2])
 _[4] = _.succ(_[3])
 _[5] = _.succ(_[4])
 _[6] = _.succ(_[5])
+_[10] = _.mul(_[2])(_[5])
+_[15] = _.mul(_[3])(_[5])
+_[100] = _.mul(_[10])(_[10])
 
 # Cons shell for testing
 shell = _.cons(_[0])(_.cons(_[1])(_.nil))
