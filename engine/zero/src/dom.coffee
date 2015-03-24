@@ -1,34 +1,84 @@
 define ->
     $ =
-        new: -> Object.create($)
-        create: (element) ->
-            @element = document.createElement(element)
-            if @isElement(@element)
-                return @
+        create: (selector) ->
+            obj =
+                element: document.createElement(selector)
+                into: (element) -> 
+                    element.appendChild @element
+                    Object.create(obj)
+                add: (dom) ->
+                    @element.appendChild dom.element
+            obj
+        get: (selector) ->
+            element = document.querySelectorAll(selector)[0]
+            if element is undefined
+                return null
             else
-                null
-        isElement: (element) ->
-            element instanceof HTMLElement
-        into: (element) ->
-            unless @isElement(element)
-                console.log "Error #001: (#{element})"
-                return
-            element.appendChild(@element)
-            @
-        add: (dom) ->
-            return unless dom
-            unless @isElement(dom.element)
-                console.log "Error #002: (#{dom.element})"
-                return
-            @element.appendChild(dom.element)
-            @
-        find: (elem) ->
-            element = document.querySelectorAll(elem)[0]
+                element
+        find: (selector) ->
+            element = document.querySelectorAll(selector)[0]
             return null if element is undefined
-            if element.length == 1
-                @element = element[0]
-            else
-                @element = element
-            @
+            $.load(if element.length is 1 then element[0] else element)
+        load: (element) ->
+            ret =
+                add: (dom) ->
+                    element.appendChild dom.element
+                css: ->
+                    switch arguments.length
+                        when 1
+                            arg = arguments[0]
+                            if typeof(arg) is "object"
+                                for k, v of arg
+                                    element.style[k] = v
+                                return $.load(element)
+                            else if typeof(arg) is "string"
+                                return element.style[arg]
+                            else
+                                return $.load(element)
+                        when 2
+                            k = arguments[0]
+                            v = arguments[1]
+                            element.style[k] = v
+                            return $.load(element)
+                        else return $.load(element)
+                on: (event, fn) ->
+                    element.addEventListener(event, fn)
+                    return $.load(element)
+                val: ->
+                    switch arguments.length
+                        when 0
+                            return element.value
+                        when 1
+                            return element.value = arguments[0]
+                        else return $.load(element)
+                html: ->
+                    switch arguments.length
+                        when 0
+                            return element.innerHTML
+                        when 1
+                            return element.innerHTML = arguments[0]
+                        else return $.load(element)
+                attr:
+                    get: (a) ->
+                        return element.getAttribute(a)
+                    set: (k, v) ->
+                        element.setAttribute(k, v)
+                        return $.load(element)
+                    has: (a) ->
+                        return element.hasAttribute(a)
+                group:
+                    add: (klass) ->
+                        element.classList.add(klass)
+                        return $.load(element)
+                    remove: (klass) ->
+                        element.classList.remove(klass)
+                        return $.load(element)
+                    has: (klass) ->
+                        element.classList.contains(klass)
+                        return $.load(element)
+                    toggle: (klass) ->
+                        element.classList.toggle(klass)
+                        $.load(element)
+            ret
             
     return $

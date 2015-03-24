@@ -3,7 +3,7 @@
 define ["dom"], ($) ->
     class CNode
         constructor: ->
-            @PAPER = $.find("canvas").element
+            @PAPER = $.get("canvas")
             @PAINT = @PAPER.getContext("2d")
             @x = 0
             @y = 0
