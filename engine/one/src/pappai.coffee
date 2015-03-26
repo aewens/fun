@@ -91,18 +91,23 @@ define ["dom"], ($) ->
             @
     
     Pappai =
-        Init: (width, height) ->
-            $.find("html").css({
-                "margin": 0
-                "padding": 0
-            })
-            $.find("body").css({
-                "margin": 0
-                "padding": 0
-            })
-            $.create("canvas", "pappai").into(document.body)
-                                        .attr.set("width",  width)
-                                        .attr.set("height", height)
+        Init: (width, height, theater) ->
+            canvas = $.create("canvas", "pappai").into(document.body)
+            if theater
+                $.find("html").css({
+                    "margin": 0
+                    "padding": 0
+                })
+                $.find("body").css({
+                    "margin": 0
+                    "padding": 0
+                })
+                canvas.attr.set("width",  window.innerWidth)
+                      .attr.set("height", window.innerHeight)
+            else
+                
+                canvas.attr.set("width",  width)
+                      .attr.set("height", height)
         Node: -> new CNode()
         Circle: (radius) -> new CCircle(@, radius)
         Box: (width, height) -> new CBox(@, width, height)

@@ -144,16 +144,22 @@
 
     })(CNode);
     Pappai = {
-      Init: function(width, height) {
-        $.find("html").css({
-          "margin": 0,
-          "padding": 0
-        });
-        $.find("body").css({
-          "margin": 0,
-          "padding": 0
-        });
-        return $.create("canvas", "pappai").into(document.body).attr.set("width", width).attr.set("height", height);
+      Init: function(width, height, theater) {
+        var canvas;
+        canvas = $.create("canvas", "pappai").into(document.body);
+        if (theater) {
+          $.find("html").css({
+            "margin": 0,
+            "padding": 0
+          });
+          $.find("body").css({
+            "margin": 0,
+            "padding": 0
+          });
+          return canvas.attr.set("width", window.innerWidth).attr.set("height", window.innerHeight);
+        } else {
+          return canvas.attr.set("width", width).attr.set("height", height);
+        }
       },
       Node: function() {
         return new CNode();
