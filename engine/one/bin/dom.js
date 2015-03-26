@@ -23,13 +23,23 @@
           return element;
         }
       },
+      mult: function(element) {
+        return element.length === 1;
+      },
+      many: function(element) {
+        if ($.mult(element)) {
+          return element[0];
+        } else {
+          return element;
+        }
+      },
       find: function(selector) {
         var element;
         element = $.query(selector);
         if (element === void 0) {
           return null;
         }
-        return $.load(element.length === 1 ? element[0] : element);
+        return $.load($.many(element));
       },
       wrap: function(term) {
         if (term instanceof HTMLElement) {

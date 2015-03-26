@@ -12,10 +12,13 @@ define ->
                 return null
             else
                 element
+        mult: (element) -> element.length is 1
+        many: (element) ->
+            if $.mult(element) then element[0] else element
         find: (selector) ->
             element = $.query(selector)
             return null if element is undefined
-            $.load(if element.length is 1 then element[0] else element)
+            $.load($.many(element))
         wrap: (term) ->
             if term instanceof HTMLElement
                 $.load(term)
@@ -28,7 +31,7 @@ define ->
                 add: (dom) ->
                     element.appendChild dom.element
                     $.load(element)
-                into: (elem) -> 
+                into: (elem) ->
                     elem.appendChild element
                     $.load(element)
                 css: ->

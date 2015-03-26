@@ -144,8 +144,16 @@
 
     })(CNode);
     Pappai = {
-      Init: function() {
-        return $.create("canvas", "pappai").into(document.body);
+      Init: function(width, height) {
+        $.find("html").css({
+          "margin": 0,
+          "padding": 0
+        });
+        $.find("body").css({
+          "margin": 0,
+          "padding": 0
+        });
+        return $.create("canvas", "pappai").into(document.body).attr.set("width", width).attr.set("height", height);
       },
       Node: function() {
         return new CNode();
