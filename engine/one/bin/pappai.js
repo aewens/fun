@@ -7,18 +7,37 @@
     var CBox, CCircle, CNode, CSquare, Pappai;
     CNode = (function() {
       function CNode() {
-        this.PAPER = $.get("canvas");
+        this.PAPER = $.get("#pappai");
         this.PAINT = this.PAPER.getContext("2d");
         this.x = 0;
         this.y = 0;
+        this.xx = 0;
+        this.yy = 0;
         this.fcolor = "#000";
         this.bcolor = "#fff";
         this.scolor = "#000";
       }
 
+      CNode.prototype.give = function(k, v) {
+        this[k] = v;
+        return this;
+      };
+
+      CNode.prototype.get = function(k) {
+        return this[k];
+      };
+
+      CNode.prototype.mid = function(x, y) {
+        return [x, y];
+      };
+
       CNode.prototype.set = function(x, y) {
+        var xy;
         this.x = x;
         this.y = y;
+        xy = this.mid(x, y);
+        this.xx = xy[0];
+        this.yy = xy[1];
         return this;
       };
 
@@ -37,15 +56,6 @@
         return this;
       };
 
-      CNode.prototype.give = function(k, v) {
-        this[k] = v;
-        return this;
-      };
-
-      CNode.prototype.get = function(k) {
-        return this[k];
-      };
-
       CNode.prototype.line = function(xa, ya, xb, yb) {
         this.PAINT.beginPath();
         this.PAINT.moveTo(xa, ya);
@@ -57,7 +67,7 @@
 
       CNode.prototype.link = function(node) {
         if (node instanceof CNode) {
-          this.line(this.x, this.y, node.x, node.y);
+          this.line(this.xx, this.yy, node.xx, node.yy);
         }
         return this;
       };
@@ -95,6 +105,10 @@
         CBox.__super__.constructor.apply(this, arguments);
       }
 
+      CBox.prototype.mid = function(x, y) {
+        return [x + (this.width / 2), y + (this.height / 2)];
+      };
+
       CBox.prototype.render = function() {
         this.PAPER.style.backgroundColor = this.bcolor;
         this.PAINT.fillStyle = this.fcolor;
@@ -114,6 +128,10 @@
         CSquare.__super__.constructor.apply(this, arguments);
       }
 
+      CSquare.prototype.mid = function(x, y) {
+        return [x + (this.side / 2), y + (this.side / 2)];
+      };
+
       CSquare.prototype.render = function() {
         this.PAPER.style.backgroundColor = this.bcolor;
         this.PAINT.fillStyle = this.fcolor;
@@ -126,6 +144,9 @@
 
     })(CNode);
     Pappai = {
+      Init: function() {
+        return $.create("canvas", "pappai").into(document.body);
+      },
       Node: function() {
         return new CNode();
       },

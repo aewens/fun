@@ -3,23 +3,20 @@
   define(function() {
     var $;
     $ = {
-      create: function(selector) {
-        var obj;
-        obj = {
-          element: document.createElement(selector),
-          into: function(element) {
-            element.appendChild(this.element);
-            return Object.create(obj);
-          },
-          add: function(dom) {
-            return this.element.appendChild(dom.element);
-          }
-        };
-        return obj;
+      create: function(selector, id) {
+        var elem;
+        elem = document.createElement(selector);
+        if (id !== void 0) {
+          elem.id = id;
+        }
+        return $.load(elem);
+      },
+      query: function(selector) {
+        return document.querySelectorAll(selector)[0];
       },
       get: function(selector) {
         var element;
-        element = document.querySelectorAll(selector)[0];
+        element = $.query(selector);
         if (element === void 0) {
           return null;
         } else {
@@ -28,17 +25,33 @@
       },
       find: function(selector) {
         var element;
-        element = document.querySelectorAll(selector)[0];
+        element = $.query(selector);
         if (element === void 0) {
           return null;
         }
         return $.load(element.length === 1 ? element[0] : element);
       },
+      wrap: function(term) {
+        if (term instanceof HTMLElement) {
+          return $.load(term);
+        } else {
+          return $.find(term);
+        }
+      },
+      unwrap: function(obj) {
+        return obj.ret;
+      },
       load: function(element) {
-        var ret;
-        ret = {
+        var obj;
+        obj = {
+          ret: element,
           add: function(dom) {
-            return element.appendChild(dom.element);
+            element.appendChild(dom.element);
+            return $.load(element);
+          },
+          into: function(elem) {
+            elem.appendChild(element);
+            return $.load(element);
           },
           css: function() {
             var arg, k, v;
@@ -121,7 +134,7 @@
             }
           }
         };
-        return ret;
+        return obj;
       }
     };
     return $;
