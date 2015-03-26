@@ -4,6 +4,11 @@
     urlArgs: "nocache=" + (new Date).getTime()
   });
 
-  require([], function() {});
+  require(["point", "vector"], function(P, V) {
+    var pos1, vec1;
+    console.log(pos1 = P(1, 2));
+    console.log(vec1 = V(2, 3));
+    return console.log(pos1.add(vec1));
+  });
 
 }).call(this);
