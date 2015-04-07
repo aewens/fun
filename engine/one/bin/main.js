@@ -5,24 +5,72 @@
   });
 
   require(["pappai"], function(Pappai) {
-    var origin, pn, wh, wx, _, _i, _len, _ref;
+    var ch, cw, origin, pn, point, pv0, v0, vec2, wh, ww, _, _i, _len, _ref;
     Pappai.Init(500, 200, true);
-    wx = window.innerWidth;
+    ww = window.innerWidth;
     wh = window.innerHeight;
+    cw = ww / 2;
+    ch = wh / 2;
     pn = [];
     _ref = new Array(4);
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       _ = _ref[_i];
       pn.push(Pappai.Node());
     }
-    pn[0].set(0, wh / 2);
-    pn[1].set(wx, wh / 2);
-    pn[2].set(wx / 2, 0);
-    pn[3].set(wx / 2, wh);
+    pn[0].set(0, ch);
+    pn[1].set(ww, ch);
+    pn[2].set(cw, 0);
+    pn[3].set(cw, wh);
     pn[0].link(pn[1]);
     pn[2].link(pn[3]);
     origin = Pappai.Circle(4);
-    return origin.set(wx / 2, wh / 2).render();
+    origin.set(cw, ch).render();
+    point = function(x, y) {
+      return new point.init(x, y);
+    };
+    point.init = function(x, y) {
+      this.x = x;
+      this.y = y;
+      return this;
+    };
+    point.prototype = {
+      to: function(p) {
+        return vec2(p.x - this.x, p.y - this.y).at(this);
+      }
+    };
+    point.init.prototype = point.prototype;
+    vec2 = function(x, y) {
+      return new vec2.init(x, y);
+    };
+    vec2.init = function(x, y) {
+      this.x = x;
+      this.y = y;
+      this.ox = 0;
+      this.oy = 0;
+      return this;
+    };
+    vec2.prototype = {
+      at: function(p) {
+        this.ox = p.x;
+        this.oy = p.y;
+        return this;
+      },
+      mag: function() {
+        return Math.sqrt((this.x * this.x) + (this.y * this.y));
+      },
+      head: function() {
+        return [this.x, this.y];
+      },
+      tail: function() {
+        return [this.ox, this.oy];
+      }
+    };
+    vec2.init.prototype = vec2.prototype;
+    console.log(vec2(2, 3).tail());
+    console.log(point(0, 0).to(point(2, 3)));
+    v0 = vec2(2, 3);
+    pv0 = Pappai.Circle(4).set(cw + (v0.x * 10), ch - (v0.y * 10)).render();
+    return origin.link(pv0);
   });
 
 }).call(this);

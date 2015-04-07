@@ -50,7 +50,9 @@ define ["dom"], ($) ->
             @give("pi", Math.PI)
             @give("tau", 2 * Math.PI)
             super
+        mid: (x, y) -> [x, y]
         render: ->
+            @PAINT.closePath()
             @PAPER.style.backgroundColor = @bcolor
             @PAINT.fillStyle = @fcolor
             @PAINT.arc(@x, @y, @radius, 0, @tau)
@@ -68,6 +70,7 @@ define ["dom"], ($) ->
                 y + (@height/2)
             ]
         render: ->
+            @PAINT.closePath()
             @PAPER.style.backgroundColor = @bcolor
             @PAINT.fillStyle = @fcolor
             @PAINT.rect(@x, @y, @width, @height)
@@ -84,9 +87,10 @@ define ["dom"], ($) ->
                 y + (@side/2)
             ]
         render: ->
+            @PAINT.closePath()
             @PAPER.style.backgroundColor = @bcolor
             @PAINT.fillStyle = @fcolor
-            @PAINT.rect(@x, @y, @side, @side)
+            @PAINT.fillRect(@x, @y, @side, @side)
             @PAINT.fill()
             @
     

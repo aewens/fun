@@ -85,7 +85,12 @@
         CCircle.__super__.constructor.apply(this, arguments);
       }
 
+      CCircle.prototype.mid = function(x, y) {
+        return [x, y];
+      };
+
       CCircle.prototype.render = function() {
+        this.PAINT.closePath();
         this.PAPER.style.backgroundColor = this.bcolor;
         this.PAINT.fillStyle = this.fcolor;
         this.PAINT.arc(this.x, this.y, this.radius, 0, this.tau);
@@ -110,6 +115,7 @@
       };
 
       CBox.prototype.render = function() {
+        this.PAINT.closePath();
         this.PAPER.style.backgroundColor = this.bcolor;
         this.PAINT.fillStyle = this.fcolor;
         this.PAINT.rect(this.x, this.y, this.width, this.height);
@@ -133,9 +139,10 @@
       };
 
       CSquare.prototype.render = function() {
+        this.PAINT.closePath();
         this.PAPER.style.backgroundColor = this.bcolor;
         this.PAINT.fillStyle = this.fcolor;
-        this.PAINT.rect(this.x, this.y, this.side, this.side);
+        this.PAINT.fillRect(this.x, this.y, this.side, this.side);
         this.PAINT.fill();
         return this;
       };
