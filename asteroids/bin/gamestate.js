@@ -18,19 +18,50 @@
     __extends(GameState, _super);
 
     function GameState(game) {
-      var a;
       GameState.__super__.constructor.call(this, game);
-      a = Math.round(Math.random() * (Points.ASTEROIDS.length - 1));
-      this.astr = new Asteroid(Points.ASTEROIDS[a], 10, 100, 100);
+      this.generateLevel();
     }
 
+    GameState.prototype.generateLevel = function() {
+      var a, astr, h, i, num, w, x, y, _i, _results;
+      num = 3;
+      w = this.game.canvas.ctx.width;
+      h = this.game.canvas.ctx.height;
+      this.asteroids = [];
+      _results = [];
+      for (i = _i = 0; 0 <= num ? _i < num : _i > num; i = 0 <= num ? ++_i : --_i) {
+        a = Math.round(Math.random() * (Points.ASTEROIDS.length - 1));
+        x = Math.round(Math.random() * (w - 1));
+        y = Math.round(Math.random() * (h - 1));
+        astr = new Asteroid(Points.ASTEROIDS[a], 10, x, y);
+        astr.max.x = w;
+        astr.max.y = h;
+        _results.push(this.asteroids.push(astr));
+      }
+      return _results;
+    };
+
     GameState.prototype.update = function() {
-      return this.astr.rotate(0.01);
+      var astr, _i, _len, _ref1, _results;
+      _ref1 = this.asteroids;
+      _results = [];
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        astr = _ref1[_i];
+        _results.push(astr.update());
+      }
+      return _results;
     };
 
     GameState.prototype.render = function(ctx) {
+      var astr, _i, _len, _ref1, _results;
       ctx.clear();
-      return this.astr.render(ctx);
+      _ref1 = this.asteroids;
+      _results = [];
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        astr = _ref1[_i];
+        _results.push(astr.render(ctx));
+      }
+      return _results;
     };
 
     return GameState;

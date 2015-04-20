@@ -16,14 +16,36 @@
       this.x = x;
       this.y = y;
       Asteroid.__super__.constructor.call(this, points);
-      this.scale(s);
+      this.size = s;
+      this.max = {
+        x: null,
+        y: null
+      };
+      this.scale(this.size);
       r = 2 * Math.PI * Math.random();
-      v = Math.random() * 4 + 1;
+      v = Math.random() * 2 + 1;
+      this.rotAngle = 0.02 * (Math.random() - 1);
       this.vel = {
         x: v * Math.cos(r),
         y: v * Math.sin(r)
       };
     }
+
+    Asteroid.prototype.update = function() {
+      this.x = this.x + this.vel.x;
+      this.y = this.y + this.vel.y;
+      if (this.x > this.max.x) {
+        this.x = 0;
+      } else if (this.x < 0) {
+        this.x = this.max.x;
+      }
+      if (this.y > this.max.y) {
+        this.y = 0;
+      } else if (this.y < 0) {
+        this.y = this.max.y;
+      }
+      return this.rotate(this.rotAngle);
+    };
 
     Asteroid.prototype.render = function(ctx) {
       return ctx.drawPoly(this, this.x, this.y);
