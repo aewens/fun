@@ -11,12 +11,28 @@ class Ship extends Polygon
         
         @scale s
         
+        @angle = 0
+        
         @vel =
             x: 0
             y: 0
+    addVel: ->
+        speed = 1/20
+        if Math.sqrt(@vel.x*@vel.x + @vel.y*@vel.y) < 20
+            @vel.x = @vel.x + speed * Math.cos @angle
+            @vel.y = @vel.y + speed * Math.sin @angle
+    rotate: (theta) ->
+        super theta
+        
+        @angle = @angle + theta
     update: ->
         @x = @x + @vel.x
         @y = @y + @vel.y
+        
+        friction = 0.99
+        
+        @vel.x = @vel.x * friction
+        @vel.y = @vel.y * friction
         
         if @x > @max.x
             @x = 0 

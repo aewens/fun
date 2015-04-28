@@ -12,6 +12,7 @@ Points = {
     ,   [-4,-2,-2,-4,2,-4,4,-2,4,2,2,4,-2,4,-4,2,-4,-2]
     ]
     SHIP: [-2,0,-3,-3,6,0,-3,3,-2,0]
+    FLAMES: [-2,0,-3,-1,-5,0,-3,1,-2,0]
 }
 
 AsteroidSize = 8
@@ -42,7 +43,16 @@ class GameState extends State
             astr.max.y = @h
             @asteroids.push astr
     handleInputs: (input) ->
-        console.log "Space!" if input.isPressed "spacebar"
+        rotateSpeed = 1/20
+        if input.isDown "up"
+            @ship.addVel()
+        if input.isDown "down"
+            @ship.addVel()
+        if input.isDown "left"
+            @ship.rotate(-rotateSpeed)
+        if input.isDown "right"
+            @ship.rotate(rotateSpeed)
+        # if input.isDown "spacebar"
     update: ->
         astr.update() for astr in @asteroids
         @ship.update()

@@ -14,7 +14,8 @@
 
   Points = {
     ASTEROIDS: [[-4, -2, -2, -4, 0, -2, 2, -4, 4, -2, 3, 0, 4, 2, 1, 4, -2, 4, -4, 2, -4, -2], [-3, 0, -4, -2, -2, -4, 0, -3, 2, -4, 4, -2, 2, -1, 4, 1, 2, 4, -1, 3, -2, 4, -4, 2, -3, 0], [-2, 0, -4, -1, -1, -4, 2, -4, 4, -1, 4, 1, 2, 4, 0, 4, 0, 1, -2, 4, -4, 1, -2, 0], [-1, -2, -2, -4, 1, -4, 4, -2, 4, -1, 1, 0, 4, 2, 2, 4, 1, 3, -2, 4, -4, 1, -4, -2, -1, -2], [-4, -2, -2, -4, 2, -4, 4, -2, 4, 2, 2, 4, -2, 4, -4, 2, -4, -2]],
-    SHIP: [-2, 0, -3, -3, 6, 0, -3, 3, -2, 0]
+    SHIP: [-2, 0, -3, -3, 6, 0, -3, 3, -2, 0],
+    FLAMES: [-2, 0, -3, -1, -5, 0, -3, 1, -2, 0]
   };
 
   AsteroidSize = 8;
@@ -52,8 +53,19 @@
     };
 
     GameState.prototype.handleInputs = function(input) {
-      if (input.isPressed("spacebar")) {
-        return console.log("Space!");
+      var rotateSpeed;
+      rotateSpeed = 1 / 20;
+      if (input.isDown("up")) {
+        this.ship.addVel();
+      }
+      if (input.isDown("down")) {
+        this.ship.addVel();
+      }
+      if (input.isDown("left")) {
+        this.ship.rotate(-rotateSpeed);
+      }
+      if (input.isDown("right")) {
+        return this.ship.rotate(rotateSpeed);
       }
     };
 

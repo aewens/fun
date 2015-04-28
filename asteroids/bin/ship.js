@@ -20,15 +20,34 @@
         y: null
       };
       this.scale(s);
+      this.angle = 0;
       this.vel = {
         x: 0,
         y: 0
       };
     }
 
+    Ship.prototype.addVel = function() {
+      var speed;
+      speed = 1 / 20;
+      if (Math.sqrt(this.vel.x * this.vel.x + this.vel.y * this.vel.y) < 20) {
+        this.vel.x = this.vel.x + speed * Math.cos(this.angle);
+        return this.vel.y = this.vel.y + speed * Math.sin(this.angle);
+      }
+    };
+
+    Ship.prototype.rotate = function(theta) {
+      Ship.__super__.rotate.call(this, theta);
+      return this.angle = this.angle + theta;
+    };
+
     Ship.prototype.update = function() {
+      var friction;
       this.x = this.x + this.vel.x;
       this.y = this.y + this.vel.y;
+      friction = 0.99;
+      this.vel.x = this.vel.x * friction;
+      this.vel.y = this.vel.y * friction;
       if (this.x > this.max.x) {
         this.x = 0;
       } else if (this.x < 0) {

@@ -13,7 +13,6 @@
       console.log(this.keys);
       for (key in this.keys) {
         code = this.keys[key];
-        console.log(key, code);
         this.keys[code] = key;
         this.down[key] = false;
         this.pressed[key] = false;

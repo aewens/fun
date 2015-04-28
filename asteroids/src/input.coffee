@@ -9,7 +9,6 @@ class InputHandler
         
         for key of @keys
             code = @keys[key]
-            console.log key, code
             @keys[code] = key
             @down[key] = false
             @pressed[key] = false
