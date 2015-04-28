@@ -1,7 +1,7 @@
 @App = window.App ? {}
 
 class InputHandler
-    constructor: (@keys) -> # left:37, up:38
+    constructor: (@keys) ->
         @down = {}
         @pressed = {}
         
