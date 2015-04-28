@@ -41,6 +41,8 @@ class GameState extends State
             astr.max.x = @w
             astr.max.y = @h
             @asteroids.push astr
+    handleInputs: (input) ->
+        console.log "Space!" if input.isPressed "spacebar"
     update: ->
         astr.update() for astr in @asteroids
         @ship.update()

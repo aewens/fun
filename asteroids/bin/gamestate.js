@@ -51,6 +51,12 @@
       return _results;
     };
 
+    GameState.prototype.handleInputs = function(input) {
+      if (input.isPressed("spacebar")) {
+        return console.log("Space!");
+      }
+    };
+
     GameState.prototype.update = function() {
       var astr, _i, _len, _ref1;
       _ref1 = this.asteroids;

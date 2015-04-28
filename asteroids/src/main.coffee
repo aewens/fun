@@ -1,7 +1,8 @@
 @App = window.App ? {}
-State     = @App.State
-GameState = @App.GameState
-Canvas    = @App.Canvas
+State        = @App.State
+GameState    = @App.GameState
+InputHandler = @App.InputHandler
+Canvas       = @App.Canvas
 
 States = 
     NO_CHANGE: 0
@@ -12,6 +13,13 @@ States =
 class Game
     constructor: ->
         @canvas = new Canvas 640, 480
+        
+        @input = new InputHandler
+            left:     65
+            up:       87
+            right:    68
+            down:     83
+            spacebar: 32
         
         @canvas.ctx.strokeStyle = "#fff"
         
@@ -29,7 +37,8 @@ class Game
                     when States.END
                         self.currentState = new State self
                 self.nextState = States.NO_CHANGE
-            self.currentState.handleInputs()
+                
+            self.currentState.handleInputs(self.input)
             self.currentState.update()
             self.currentState.render self.canvas.ctx
 
