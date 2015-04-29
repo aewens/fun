@@ -25,7 +25,7 @@ class GameState extends State
         @w = @game.canvas.ctx.width
         @h = @game.canvas.ctx.height
         
-        @ship = new Ship Points.SHIP, ShipSize, @w / 2, @h / 2
+        @ship = new Ship Points.SHIP, Points.FLAMES, ShipSize, @w / 2, @h / 2
         @ship.max.x = @w
         @ship.max.y = @h
         
@@ -45,8 +45,6 @@ class GameState extends State
     handleInputs: (input) ->
         rotateSpeed = 1/20
         if input.isDown "up"
-            @ship.addVel()
-        if input.isDown "down"
             @ship.addVel()
         if input.isDown "left"
             @ship.rotate(-rotateSpeed)

@@ -2,8 +2,11 @@
 Polygon = @App.Polygon
 
 class Ship extends Polygon
-    constructor: (points, s, @x, @y) ->
+    constructor: (points, fs, s, @x, @y) ->
         super points
+        
+        @flames = new Polygon fs
+        @flames.scale s
         
         @max =
             x: null
@@ -24,6 +27,7 @@ class Ship extends Polygon
     rotate: (theta) ->
         super theta
         
+        @flames.rotate theta
         @angle = @angle + theta
     update: ->
         @x = @x + @vel.x
@@ -44,6 +48,7 @@ class Ship extends Polygon
             @y = @max.y
     render: (ctx) ->
         ctx.drawPoly @, @x, @y
+        ctx.drawPoly @flames, @x, @y
 
 
 @App.Ship = Ship

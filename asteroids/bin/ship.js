@@ -11,10 +11,12 @@
   Ship = (function(_super) {
     __extends(Ship, _super);
 
-    function Ship(points, s, x, y) {
+    function Ship(points, fs, s, x, y) {
       this.x = x;
       this.y = y;
       Ship.__super__.constructor.call(this, points);
+      this.flames = new Polygon(fs);
+      this.flames.scale(s);
       this.max = {
         x: null,
         y: null
@@ -38,6 +40,7 @@
 
     Ship.prototype.rotate = function(theta) {
       Ship.__super__.rotate.call(this, theta);
+      this.flames.rotate(theta);
       return this.angle = this.angle + theta;
     };
 
@@ -61,7 +64,8 @@
     };
 
     Ship.prototype.render = function(ctx) {
-      return ctx.drawPoly(this, this.x, this.y);
+      ctx.drawPoly(this, this.x, this.y);
+      return ctx.drawPoly(this.flames, this.x, this.y);
     };
 
     return Ship;

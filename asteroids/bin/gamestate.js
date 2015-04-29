@@ -29,7 +29,7 @@
       GameState.__super__.constructor.call(this, game);
       this.w = this.game.canvas.ctx.width;
       this.h = this.game.canvas.ctx.height;
-      this.ship = new Ship(Points.SHIP, ShipSize, this.w / 2, this.h / 2);
+      this.ship = new Ship(Points.SHIP, Points.FLAMES, ShipSize, this.w / 2, this.h / 2);
       this.ship.max.x = this.w;
       this.ship.max.y = this.h;
       this.generateLevel();
@@ -56,9 +56,6 @@
       var rotateSpeed;
       rotateSpeed = 1 / 20;
       if (input.isDown("up")) {
-        this.ship.addVel();
-      }
-      if (input.isDown("down")) {
         this.ship.addVel();
       }
       if (input.isDown("left")) {
