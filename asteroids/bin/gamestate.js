@@ -55,6 +55,7 @@
     GameState.prototype.handleInputs = function(input) {
       var rotateSpeed;
       rotateSpeed = 1 / 20;
+      this.ship.drawFlames = false;
       if (input.isDown("up")) {
         this.ship.addVel();
       }

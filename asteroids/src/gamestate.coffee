@@ -44,6 +44,7 @@ class GameState extends State
             @asteroids.push astr
     handleInputs: (input) ->
         rotateSpeed = 1/20
+        @ship.drawFlames = false
         if input.isDown "up"
             @ship.addVel()
         if input.isDown "left"

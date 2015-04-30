@@ -17,6 +17,7 @@
       Ship.__super__.constructor.call(this, points);
       this.flames = new Polygon(fs);
       this.flames.scale(s);
+      this.drawFlames = false;
       this.max = {
         x: null,
         y: null
@@ -34,8 +35,9 @@
       speed = 1 / 20;
       if (Math.sqrt(this.vel.x * this.vel.x + this.vel.y * this.vel.y) < 20) {
         this.vel.x = this.vel.x + speed * Math.cos(this.angle);
-        return this.vel.y = this.vel.y + speed * Math.sin(this.angle);
+        this.vel.y = this.vel.y + speed * Math.sin(this.angle);
       }
+      return this.drawFlames = true;
     };
 
     Ship.prototype.rotate = function(theta) {
@@ -65,7 +67,9 @@
 
     Ship.prototype.render = function(ctx) {
       ctx.drawPoly(this, this.x, this.y);
-      return ctx.drawPoly(this.flames, this.x, this.y);
+      if (this.drawFlames) {
+        return ctx.drawPoly(this.flames, this.x, this.y);
+      }
     };
 
     return Ship;

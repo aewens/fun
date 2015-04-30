@@ -8,6 +8,8 @@ class Ship extends Polygon
         @flames = new Polygon fs
         @flames.scale s
         
+        @drawFlames = false
+        
         @max =
             x: null
             y: null
@@ -24,6 +26,7 @@ class Ship extends Polygon
         if Math.sqrt(@vel.x*@vel.x + @vel.y*@vel.y) < 20
             @vel.x = @vel.x + speed * Math.cos @angle
             @vel.y = @vel.y + speed * Math.sin @angle
+        @drawFlames = true
     rotate: (theta) ->
         super theta
         
@@ -48,7 +51,6 @@ class Ship extends Polygon
             @y = @max.y
     render: (ctx) ->
         ctx.drawPoly @, @x, @y
-        ctx.drawPoly @flames, @x, @y
-
+        ctx.drawPoly @flames, @x, @y if @drawFlames
 
 @App.Ship = Ship
