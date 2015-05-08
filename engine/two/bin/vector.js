@@ -62,4 +62,6 @@
 
   })();
 
+  this.App.Vector = Vector;
+
 }).call(this);

@@ -26,3 +26,5 @@ class Vector
         u.x * v.x + u.y * v.y
     theta: (v) ->
         Math.acos(@dot2(@norm(), v.norm()))
+
+@App.Vector = Vector
