@@ -18,6 +18,8 @@ class Vector
         new Vector(@x / @mag(), @y / @mag())
     mag: ->
         Math.sqrt(@x * @x + @y * @y)
+    mag2: ->
+        @x * @x + @y * @y
     dot: (v) ->
         @x * v.x + @y * v.y
     dot2: (u, v) ->

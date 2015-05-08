@@ -42,6 +42,10 @@
       return Math.sqrt(this.x * this.x + this.y * this.y);
     };
 
+    Vector.prototype.mag2 = function() {
+      return this.x * this.x + this.y * this.y;
+    };
+
     Vector.prototype.dot = function(v) {
       return this.x * v.x + this.y * v.y;
     };
