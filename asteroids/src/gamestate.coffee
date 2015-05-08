@@ -1,5 +1,6 @@
 @App = window.App ? {}
 State    = @App.State
+Polygon  = @App.Polygon
 Asteroid = @App.Asteroid
 Ship     = @App.Ship
 
@@ -29,11 +30,18 @@ class GameState extends State
         @ship.max.x = @w
         @ship.max.y = @h
         
+        @lives = 3
+        @life = new Polygon Points.SHIP
+        @life.scale 1.5
+        @life.rotate -Math.PI/2
+        
         @level = 0
+        @score = 0
+        @gameOver = false
         
         @generateLevel()
     generateLevel: ->
-        num = Math.round (@level + 5) / 10 + 2
+        num = Math.round 10 * Math.atan(@level / 25) + 3
         
         @ship.x = @w / 2
         @ship.y = @h / 2
@@ -54,7 +62,12 @@ class GameState extends State
             @asteroids.push astr
     handleInputs: (input) ->
         rotateSpeed = 1/20
-        @ship.drawFlames = false
+        
+        unless @ship.visible
+            if input.isPressed "spacebar"
+                @ship.visible = true
+            return
+        
         if input.isDown "up"
             @ship.addVel()
         if input.isDown "left"
@@ -69,6 +82,16 @@ class GameState extends State
         while ai < al
             astr = @asteroids[ai]
             astr.update()
+            
+            if @ship.collide(astr)
+                @ship.x = @w / 2
+                @ship.y = @h / 2
+                @ship.vel.x = 0
+                @ship.vel.y = 0
+                @ship.visible = false
+                @lives = @lives - 1
+                @gameOver = true if @lives is 0
+            
             bi = 0
             bl = @bullets.length
             while bi < bl
@@ -113,6 +136,10 @@ class GameState extends State
             @generateLevel()
     render: (ctx) ->
         ctx.clear()
+        
+        for l in [0...@lives]
+            ctx.drawPoly @life, 15 + 15 * l, 20
+        
         astr.render ctx for astr in @asteroids
         b.render ctx for b in @bullets
         @ship.render ctx

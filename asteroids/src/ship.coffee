@@ -10,6 +10,7 @@ class Ship extends Polygon
         @flames.scale s
         
         @drawFlames = false
+        @visible = true
         
         @max =
             x: null
@@ -22,6 +23,14 @@ class Ship extends Polygon
         @vel =
             x: 0
             y: 0
+    collide: (astr) ->
+        return unless @visible
+        for i in [0...@points.length-2] by 2
+            x = @x + @points[i]
+            y = @y + @points[i+1]
+            
+            return true if astr.hasPoint x, y
+        false
     shoot: ->
         bullet = new Bullet @points[0] + @x, @points[1] + @y, @angle
         bullet.max.x = @max.x
@@ -56,7 +65,9 @@ class Ship extends Polygon
         else if @y < 0
             @y = @max.y
     render: (ctx) ->
-        ctx.drawPoly @, @x, @y
-        ctx.drawPoly @flames, @x, @y if @drawFlames
+        ctx.drawPoly @, @x, @y if @visible
+        if @drawFlames and @visible
+            ctx.drawPoly @flames, @x, @y
+            @drawFlames = false
 
 @App.Ship = Ship

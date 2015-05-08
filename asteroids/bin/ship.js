@@ -20,6 +20,7 @@
       this.flames = new Polygon(fs);
       this.flames.scale(s);
       this.drawFlames = false;
+      this.visible = true;
       this.max = {
         x: null,
         y: null
@@ -31,6 +32,21 @@
         y: 0
       };
     }
+
+    Ship.prototype.collide = function(astr) {
+      var i, x, y, _i, _ref1;
+      if (!this.visible) {
+        return;
+      }
+      for (i = _i = 0, _ref1 = this.points.length - 2; _i < _ref1; i = _i += 2) {
+        x = this.x + this.points[i];
+        y = this.y + this.points[i + 1];
+        if (astr.hasPoint(x, y)) {
+          return true;
+        }
+      }
+      return false;
+    };
 
     Ship.prototype.shoot = function() {
       var bullet;
@@ -76,9 +92,12 @@
     };
 
     Ship.prototype.render = function(ctx) {
-      ctx.drawPoly(this, this.x, this.y);
-      if (this.drawFlames) {
-        return ctx.drawPoly(this.flames, this.x, this.y);
+      if (this.visible) {
+        ctx.drawPoly(this, this.x, this.y);
+      }
+      if (this.drawFlames && this.visible) {
+        ctx.drawPoly(this.flames, this.x, this.y);
+        return this.drawFlames = false;
       }
     };
 
