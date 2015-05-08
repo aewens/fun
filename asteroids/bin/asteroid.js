@@ -31,6 +31,10 @@
       };
     }
 
+    Asteroid.prototype.hasPoint = function(x, y) {
+      return Asteroid.__super__.hasPoint.call(this, this.x, this.y, x, y);
+    };
+
     Asteroid.prototype.update = function() {
       this.x = this.x + this.vel.x;
       this.y = this.y + this.vel.y;

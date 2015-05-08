@@ -5,8 +5,6 @@ class InputHandler
         @down = {}
         @pressed = {}
         
-        console.log @keys
-        
         for key of @keys
             code = @keys[key]
             @keys[code] = key

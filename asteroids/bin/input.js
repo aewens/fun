@@ -10,7 +10,6 @@
       this.keys = keys;
       this.down = {};
       this.pressed = {};
-      console.log(this.keys);
       for (key in this.keys) {
         code = this.keys[key];
         this.keys[code] = key;

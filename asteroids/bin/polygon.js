@@ -32,7 +32,25 @@
       return _results;
     };
 
-    Polygon.prototype.hasPoint = function(ox, oy, x, y) {};
+    Polygon.prototype.hasPoint = function(ox, oy, x, y) {
+      var c, cond1, cond2, i, j, p, px1, px2, py1, py2, _i, _ref1;
+      p = this.points;
+      c = false;
+      j = p.length - 2;
+      for (i = _i = 0, _ref1 = p.length; _i < _ref1; i = _i += 2) {
+        px1 = p[i] + ox;
+        px2 = p[j] + ox;
+        py1 = p[i + 1] + oy;
+        py2 = p[j + 1] + oy;
+        cond1 = (py1 > y) !== (py2 > y);
+        cond2 = x < (px2 - px1) * (y - py1) / (py2 - py1) + px1;
+        if (cond1 && cond2) {
+          c = !c;
+        }
+        j = i;
+      }
+      return c;
+    };
 
     return Polygon;
 

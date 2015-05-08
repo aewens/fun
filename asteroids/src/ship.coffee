@@ -1,5 +1,6 @@
 @App = window.App ? {}
 Polygon = @App.Polygon
+Bullet  = @App.Bullet
 
 class Ship extends Polygon
     constructor: (points, fs, s, @x, @y) ->
@@ -21,6 +22,11 @@ class Ship extends Polygon
         @vel =
             x: 0
             y: 0
+    shoot: ->
+        bullet = new Bullet @points[0] + @x, @points[1] + @y, @angle
+        bullet.max.x = @max.x
+        bullet.max.y = @max.y
+        bullet
     addVel: ->
         speed = 1/20
         if Math.sqrt(@vel.x*@vel.x + @vel.y*@vel.y) < 20

@@ -32,18 +32,27 @@
       this.ship = new Ship(Points.SHIP, Points.FLAMES, ShipSize, this.w / 2, this.h / 2);
       this.ship.max.x = this.w;
       this.ship.max.y = this.h;
+      this.level = 0;
       this.generateLevel();
     }
 
     GameState.prototype.generateLevel = function() {
       var a, astr, i, num, x, y, _i, _results;
-      num = 3;
+      num = Math.round((this.level + 5) / 10 + 2);
+      this.ship.x = this.w / 2;
+      this.ship.y = this.h / 2;
+      this.bullets = [];
       this.asteroids = [];
       _results = [];
       for (i = _i = 0; 0 <= num ? _i < num : _i > num; i = 0 <= num ? ++_i : --_i) {
         a = Math.round(Math.random() * (Points.ASTEROIDS.length - 1));
-        x = Math.round(Math.random() * (this.w - 1));
-        y = Math.round(Math.random() * (this.h - 1));
+        x = 0;
+        y = 0;
+        if (Math.random() > 0.5) {
+          x = Math.round(Math.random() * this.w);
+        } else {
+          y = Math.round(Math.random() * this.h);
+        }
         astr = new Asteroid(Points.ASTEROIDS[a], AsteroidSize, x, y);
         astr.max.x = this.w;
         astr.max.y = this.h;
@@ -63,27 +72,81 @@
         this.ship.rotate(-rotateSpeed);
       }
       if (input.isDown("right")) {
-        return this.ship.rotate(rotateSpeed);
+        this.ship.rotate(rotateSpeed);
+      }
+      if (input.isPressed("spacebar")) {
+        return this.bullets.push(this.ship.shoot());
       }
     };
 
     GameState.prototype.update = function() {
-      var astr, _i, _len, _ref1;
-      _ref1 = this.asteroids;
-      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-        astr = _ref1[_i];
+      var a, ai, al, astr, b, bi, bl, k, mini, t, ts, x, y, _i;
+      ai = 0;
+      al = this.asteroids.length;
+      while (ai < al) {
+        astr = this.asteroids[ai];
         astr.update();
+        bi = 0;
+        bl = this.bullets.length;
+        while (bi < bl) {
+          b = this.bullets[bi];
+          if (astr.hasPoint(b.x, b.y)) {
+            this.bullets.splice(bi, 1);
+            bl = bl - 1;
+            bi = bi - 1;
+            if (astr.size > AsteroidSize / 4) {
+              for (k = _i = 0; _i < 2; k = ++_i) {
+                ts = Points.ASTEROIDS.length - 1;
+                a = Math.round(Math.random() * ts);
+                x = Math.round(Math.random() * (this.w - 1));
+                y = Math.round(Math.random() * (this.h - 1));
+                t = Points.ASTEROIDS[a];
+                mini = new Asteroid(t, astr.size / 2, astr.x, astr.y);
+                mini.max.x = this.w;
+                mini.max.y = this.h;
+                this.asteroids.push(mini);
+                al = al + 1;
+              }
+            }
+            this.asteroids.splice(ai, 1);
+            al = al - 1;
+            ai = ai - 1;
+          }
+          bi = bi + 1;
+        }
+        ai = ai + 1;
       }
-      return this.ship.update();
+      bi = 0;
+      bl = this.bullets.length;
+      while (bi < bl) {
+        b = this.bullets[bi];
+        b.update();
+        if (b.omit) {
+          this.bullets.splice(bi, 1);
+          bl = bl - 1;
+          bi = bi - 1;
+        }
+        bi = bi + 1;
+      }
+      this.ship.update();
+      if (this.asteroids.length === 0) {
+        this.level = this.level + 1;
+        return this.generateLevel();
+      }
     };
 
     GameState.prototype.render = function(ctx) {
-      var astr, _i, _len, _ref1;
+      var astr, b, _i, _j, _len, _len1, _ref1, _ref2;
       ctx.clear();
       _ref1 = this.asteroids;
       for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
         astr = _ref1[_i];
         astr.render(ctx);
+      }
+      _ref2 = this.bullets;
+      for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
+        b = _ref2[_j];
+        b.render(ctx);
       }
       return this.ship.render(ctx);
     };

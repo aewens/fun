@@ -18,6 +18,8 @@ class Asteroid extends Polygon
         @vel =
             x: v * Math.cos r
             y: v * Math.sin r
+    hasPoint: (x, y) ->
+        super @x, @y, x, y
     update: ->
         @x = @x + @vel.x
         @y = @y + @vel.y
