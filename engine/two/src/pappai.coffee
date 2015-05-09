@@ -132,7 +132,7 @@ define ->
                 canvas.style.margin = "#{xm}px #{ym}px"
                 canvas.style.display = "block"
                 
-            ((ctx, w, h) ->
+            ((ctx) ->
                 ctx.width = ctx.canvas.width
                 ctx.height = ctx.canvas.height
                 ctx.clear = ->
