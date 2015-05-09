@@ -212,7 +212,7 @@
           canvas.style.margin = "" + xm + "px " + ym + "px";
           canvas.style.display = "block";
         }
-        return (function(ctx, w, h) {
+        return (function(ctx) {
           ctx.width = ctx.canvas.width;
           ctx.height = ctx.canvas.height;
           ctx.clear = function() {

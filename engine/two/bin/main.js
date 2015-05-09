@@ -4,24 +4,14 @@
     urlArgs: "nocache=" + (new Date).getTime()
   });
 
-  require(["pappai", "box"], function(Pappai, Box) {
-    var animate, box1, box2, canvas, ctx;
+  require(["engine", "pappai", "box"], function(Engine, Pappai, Box) {
+    var box1, box2, canvas, ctx, engine;
     ctx = Pappai.Init(960, 960 * 9 / 16, true);
     canvas = ctx.canvas;
-    animate = function(leup) {
-      var l, rf;
-      rf = (function() {
-        return window.requestAnimationFrame;
-      })();
-      l = function() {
-        leup();
-        return rf(l, canvas);
-      };
-      return rf(l, canvas);
-    };
+    engine = new Engine(ctx);
     box1 = new Box(20, 20, 40, 40);
     box2 = new Box(120, 20, 40, 40);
-    return animate(function() {
+    return engine.animate(function() {
       ctx.clear();
       box1.render("#f00");
       return box2.render("#00f");
