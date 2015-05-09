@@ -6,6 +6,12 @@
 
   window.floor = Math.floor;
 
+  window.asin = Math.asin;
+
+  window.acos = Math.acos;
+
+  window.atan = Math.atan;
+
   window.sqrt = Math.sqrt;
 
   window.log = Math.log;
@@ -25,6 +31,10 @@
   window.tau = Math.PI * 2;
 
   window.pi = Math.PI;
+
+  window.ln = Math.log;
+
+  window.E = Math.E;
 
   window.sqre = function(x) {
     return Math.pow(x, 2);
