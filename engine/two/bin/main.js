@@ -4,17 +4,53 @@
     urlArgs: "nocache=" + (new Date).getTime()
   });
 
-  require(["engine", "pappai", "box"], function(Engine, Pappai, Box) {
-    var box1, box2, canvas, ctx, engine;
+  require(["engine", "pappai", "box", "formulae"], function(Engine, Pappai, Box, Formulae) {
+    var box1, box2, canvas, ctx, engine, fnx, fny, form, h, opts, r, s, t, u, v, w;
     ctx = Pappai.Init(960, 960 * 9 / 16, true);
     canvas = ctx.canvas;
+    w = ctx.width;
+    h = ctx.height;
     engine = new Engine(ctx);
     box1 = new Box(20, 20, 40, 40);
     box2 = new Box(120, 20, 40, 40);
+    fnx = function(i) {
+      i *= 5 * tau / this.steps;
+      return cos(i);
+    };
+    fny = function(i) {
+      i *= 5 * tau / 7;
+      return sin(i);
+    };
+    opts = {
+      doStroke: true,
+      noFill: true
+    };
+    form = new Formulae(fnx, fny, 7).grow(50).move(w / 2, h / 2).set(0, 0);
+    r = 2;
+    s = 0;
+    t = 0;
+    u = 0;
+    v = 0;
     return engine.animate(function() {
       ctx.clear();
+      form.rotate(0.01);
+      form.move(w / 2 + u, h / 2 + v);
+      form.render(ctx, opts);
       box1.render("#f00");
-      return box2.render("#00f");
+      box2.render("#00f");
+      s = (s + 1) % 50;
+      if (s % 3 === 0 && t === 0) {
+        u = u + r;
+      }
+      if (s % 3 === 0 && t === 1) {
+        v = v + r;
+      }
+      if (s === 0) {
+        r = r * -1;
+      }
+      if (s === 0 && r > 0) {
+        return t = (t + 1) % 2;
+      }
     });
   });
 
